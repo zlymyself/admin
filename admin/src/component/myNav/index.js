@@ -2,25 +2,23 @@ import React,{Component} from 'react'
 import  {withRouter} from 'react-router-dom'
 import {Menu,Icon} from 'antd'
 let navData=[
-  {name:'首页',path:'/home'},
-  {name:'设置',path:'/setting'},
+  {name:'首页',path:'/admin/home'},
+  {name:'设置',path:'/admin/setting'},
   {name:'用户管理',
    path:'/user',
    children:[
      {name:'用户列表',path:'/user/list'},
-     {name:'用户删除',
-      path:'/user/del',
-      children:[
-        {name:'用户列表1',path:'/user/list'},
-        {name:'用户删除2',path:'/user/del'},
-      ]
-    }
+     {name:'用户删除',path:'/user/del'},
    ]
   },
 ]
 const {SubMenu} = Menu
 
 class MyNav extends Component{
+  jump=(path)=>{
+    console.log(this)
+    this.props.history.push(path)
+  }
   renderItem=(data)=>{
     return data.map((item,index)=>{
       if(item.children){
@@ -31,7 +29,7 @@ class MyNav extends Component{
           </SubMenu>
         )
       }else{
-        return <Menu.Item key={index}>{item.name}</Menu.Item>
+        return <Menu.Item onClick={this.jump.bind(this,item.path)} key={index}>{item.name}</Menu.Item>
       }
       
     }) 

@@ -1,11 +1,14 @@
 import React,{Component} from 'react'
+import MyNav from '../myNav'
+import TokenMoDal from '../modal'
 import './index.less';
 class Admin extends Component{
     render(){
         return(
             <div className="admin">
+                <TokenMoDal></TokenMoDal>
                 <div className="admin-nav">
-                  侧边栏
+                <MyNav></MyNav>
                 </div>
                 <div className="admin-content">
                   <div>

@@ -1,12 +1,21 @@
 import React,{Component} from 'react'
-import { Form, Icon, Input, Button, Checkbox ,Card} from 'antd';
-//mport './login.css'
+import { Form, Icon, Input, Button, Checkbox ,Card,message} from 'antd';
+import './index.less'
 class Login extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
+      if (err) {
+        message.error("输入信息有误请重试")
+        //console.log('Received values of form: ', values);
+      }else{
+        this.$axios.post('/yapi/admin/login',JSON.stringify({us:123,ps:123}))
+        .then((values)=>{
+          console.log(values)
+        })
+        message.success("登陆成功1s后跳转首页",1,()=>{
+          this.props.history.push('/admin')
+        })
       }
     });
   };
@@ -14,7 +23,8 @@ class Login extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Card style={{width:'400px',position:'fixed',top:'17vh',right:'50px'}}>
+      <div className = "login-box">
+      <Card style={{width:'300px',position:'fixed',top:'17vh',right:'50px'}}>
           <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
           {getFieldDecorator('username', {
@@ -52,6 +62,7 @@ class Login extends React.Component {
         </Form.Item>
       </Form>
       </Card>
+      </div>
     );
   }
 }
